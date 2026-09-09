@@ -9,7 +9,7 @@ import Container from "@/components/Container";
 
 export default function Footer() {
   return (
-    <footer className="bg-darkPurple text-white w-full mt-10">
+    <footer className="bg-darkPurple text-white w-full">
       <Container className="pt-16 pb-6">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10 mb-12">
           <div className="md:col-span-5">

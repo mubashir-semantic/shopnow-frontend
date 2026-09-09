@@ -7,26 +7,16 @@ import SocialButton from "@/components/SocialButton";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Container from "@/components/Container";
+import Link from "next/link";
 
 export default function SignupPage() {
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
 
-      <main className="flex-grow flex items-center justify-center py-30">
+      <main className="flex-grow flex items-center justify-center py-25">
         <Container className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
           <div className="flex justify-center items-center relative">
-            {/* <div className="absolute -left-10 -top-10 z-0">
-              <Image
-                src="/Vector.png"
-                alt="Orange Background Shape"
-                width={420}
-                height={300}
-                className="object-contain w-auto h-auto"
-                priority
-              />
-            </div> */}
-
             <div className="w-[470px] h-[470px] bg-lightBlue rounded-full flex items-center justify-center relative z-10">
               <Image
                 src="/car-service-repair-illustration.png"
@@ -77,9 +67,12 @@ export default function SignupPage() {
 
             <p className="text-center mt-8 text-sm text-gray-600">
               Already have an account?{" "}
-              <a href="#" className="font-bold text-black hover:underline">
+              <Link
+                href="/login"
+                className="font-bold text-black hover:underline"
+              >
                 Log in
-              </a>
+              </Link>
             </p>
           </div>
         </Container>
