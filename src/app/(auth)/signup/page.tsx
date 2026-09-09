@@ -16,7 +16,7 @@ export default function SignupPage() {
       <main className="flex-grow flex items-center justify-center py-30">
         <Container className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
           <div className="flex justify-center items-center relative">
-            <div className="absolute -left-10 -top-10 z-0">
+            {/* <div className="absolute -left-10 -top-10 z-0">
               <Image
                 src="/Vector.png"
                 alt="Orange Background Shape"
@@ -25,7 +25,7 @@ export default function SignupPage() {
                 className="object-contain w-auto h-auto"
                 priority
               />
-            </div>
+            </div> */}
 
             <div className="w-[470px] h-[470px] bg-lightBlue rounded-full flex items-center justify-center relative z-10">
               <Image
