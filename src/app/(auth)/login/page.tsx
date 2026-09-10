@@ -1,30 +1,69 @@
+"use client";
+
+import { useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebook, FaInstagram } from "react-icons/fa";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { loginSchema, type LoginFormValues } from "@/utilities/validations";
+
 import Input from "@/components/Input";
 import Button from "@/components/Button";
 import SocialButton from "@/components/SocialButton";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Container from "@/components/Container";
+import AuthLink from "@/components/AuthLink";
 
 export default function LoginPage() {
+  const [isLoading, setIsLoading] = useState(false);
+
+  // Hook Form Setup
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginFormValues>({
+    resolver: zodResolver(loginSchema),
+  });
+
+  const onSubmit = (data: LoginFormValues) => {
+    setIsLoading(true);
+    console.log("Form Data: ", data);
+
+    setTimeout(() => {
+      setIsLoading(false);
+      alert("Validation successful!");
+    }, 2000);
+  };
+
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
-
       <main className="flex-grow flex items-center justify-center py-25">
         <Container className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
-          {/* Left Side: Illustration */}
-          <div className="flex justify-center items-center relative">
-            <div className="w-[470px] h-[470px] bg-[#E8F1FF] rounded-full flex items-center justify-center relative z-10">
+          {/* Left Side: Illustration Area */}
+          <div className="flex justify-center items-center relative w-full py-10">
+            <div className="absolute -top-3 -left-4 w-[400px] h-[400px] md:w-[450px] md:h-[450px] z-0">
+              <Image
+                src="/Vector.png"
+                alt="Background Design"
+                fill
+                sizes="(max-width: 768px) 400px, 450px"
+                className="object-contain"
+                priority
+              />
+            </div>
+
+            {/* Light Blue Circle Container */}
+            <div className="w-[470px] h-[470px] bg-lightBlue rounded-full flex items-center justify-center relative z-10">
               <Image
                 src="/car-service-repair-illustration-2.png"
-                alt="Car Service Login Illustration"
-                width={400}
-                height={400}
-                className="object-contain z-20 mix-blend-multiply"
+                alt="Car Service Login"
+                width={360}
+                height={360}
+                className="object-contain z-20 mix-blend-multiply w-[360px] h-[360px]"
                 priority
               />
             </div>
@@ -39,7 +78,6 @@ export default function LoginPage() {
               Welcome back! Please enter your details.
             </p>
 
-            {/* Social Logins (Top in Login Page) */}
             <div className="grid grid-cols-3 gap-4 mb-6">
               <SocialButton icon={<FcGoogle size={22} />} />
               <SocialButton
@@ -50,19 +88,42 @@ export default function LoginPage() {
               />
             </div>
 
-            {/* Divider */}
             <div className="flex items-center mb-6">
               <hr className="flex-grow border-gray-200" />
               <span className="px-3 text-gray-400 text-xs">or</span>
               <hr className="flex-grow border-gray-200" />
             </div>
 
-            {/* Form Inputs */}
-            <form className="flex flex-col space-y-5">
-              <Input type="email" placeholder="Email" />
-              <Input type="password" placeholder="Password" />
+            <form
+              onSubmit={handleSubmit(onSubmit)}
+              className="flex flex-col space-y-5"
+            >
+              <div>
+                <Input
+                  type="email"
+                  placeholder="Email"
+                  {...register("email")}
+                />
+                {errors.email && (
+                  <p className="text-red-500 text-xs mt-1.5 px-1">
+                    {errors.email.message}
+                  </p>
+                )}
+              </div>
 
-              {/* Remember Me & Forgot Password Row */}
+              <div>
+                <Input
+                  type="password"
+                  placeholder="Password"
+                  {...register("password")}
+                />
+                {errors.password && (
+                  <p className="text-red-500 text-xs mt-1.5 px-1">
+                    {errors.password.message}
+                  </p>
+                )}
+              </div>
+
               <div className="flex justify-between items-center text-sm pt-2">
                 <label className="flex items-center space-x-2 text-gray-600 cursor-pointer">
                   <input
@@ -71,32 +132,23 @@ export default function LoginPage() {
                   />
                   <span>Remember me</span>
                 </label>
-                <Link
-                  href="#"
-                  className="text-black font-semibold hover:underline border-b border-black "
-                >
-                  Forgot Password
-                </Link>
+                <AuthLink href="/forgot-password">Forgot Password</AuthLink>
               </div>
 
               <div className="pt-4">
-                <Button type="button">Log in</Button>
+                <Button type="submit" disabled={isLoading}>
+                  {isLoading ? "Logging in..." : "Log in"}
+                </Button>
               </div>
             </form>
 
             <p className="text-center mt-8 text-sm text-gray-600">
               Do not have an account?{" "}
-              <Link
-                href="/signup"
-                className="font-bold text-black hover:underline"
-              >
-                Sign up for free
-              </Link>
+              <AuthLink href="/signup">Sign up for free</AuthLink>
             </p>
           </div>
         </Container>
       </main>
-
       <Footer />
     </div>
   );

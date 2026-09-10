@@ -1,0 +1,130 @@
+"use client";
+
+import { useState } from "react";
+import Image from "next/image";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  resetPasswordSchema,
+  type ResetPasswordFormValues,
+} from "@/utilities/validations";
+
+import Input from "@/components/Input";
+import Button from "@/components/Button";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import Container from "@/components/Container";
+import AuthLink from "@/components/AuthLink";
+
+export default function ResetPasswordPage() {
+  const [isLoading, setIsLoading] = useState(false);
+
+  // Hook Form Setup
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<ResetPasswordFormValues>({
+    resolver: zodResolver(resetPasswordSchema),
+  });
+
+  const onSubmit = (data: ResetPasswordFormValues) => {
+    setIsLoading(true);
+    console.log("Reset Password Data: ", data);
+
+    setTimeout(() => {
+      setIsLoading(false);
+      alert("Password reset successfully! You can now log in.");
+    }, 2000);
+  };
+
+  return (
+    <div className="min-h-screen flex flex-col">
+      <Header />
+
+      <main className="flex-grow flex items-center justify-center py-25">
+        <Container className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+          {/* Left Side: Consistent Illustration Area */}
+          <div className="flex justify-center items-center relative w-full py-10">
+            <div className="absolute top-4 -left-4 w-[400px] h-[400px] md:w-[450px] md:h-[450px] z-0">
+              <Image
+                src="/Vector.png"
+                alt="Background Design"
+                fill
+                sizes="(max-width: 768px) 400px, 450px"
+                className="object-contain"
+                priority
+              />
+            </div>
+            <div className="w-[470px] h-[470px] bg-lightBlue rounded-full flex items-center justify-center relative z-10">
+              <Image
+                src="/car-service-repair-illustration.png"
+                alt="Car Service Illustration"
+                width={360}
+                height={360}
+                className="object-contain z-20 w-[360px] h-[360px]"
+                priority
+              />
+            </div>
+          </div>
+
+          {/* Right Side: Reset Password Form Area */}
+          <div className="bg-white p-10 rounded-2xl shadow-sm w-full max-w-lg ml-auto">
+            <h1 className="text-3xl font-bold text-black mb-2">
+              Set new password
+            </h1>
+            <p className="text-gray-500 mb-8 text-sm leading-relaxed">
+              Your new password must be different from previously used
+              passwords.
+            </p>
+
+            <form
+              onSubmit={handleSubmit(onSubmit)}
+              className="flex flex-col space-y-6"
+            >
+              {/* New Password */}
+              <div>
+                <Input
+                  type="password"
+                  placeholder="New Password"
+                  {...register("newPassword")}
+                />
+                {errors.newPassword && (
+                  <p className="text-red-500 text-xs mt-1.5 px-1">
+                    {errors.newPassword.message}
+                  </p>
+                )}
+              </div>
+
+              {/* Confirm Password */}
+              <div>
+                <Input
+                  type="password"
+                  placeholder="Confirm New Password"
+                  {...register("confirmPassword")}
+                />
+                {errors.confirmPassword && (
+                  <p className="text-red-500 text-xs mt-1.5 px-1">
+                    {errors.confirmPassword.message}
+                  </p>
+                )}
+              </div>
+
+              <div className="pt-2">
+                <Button type="submit" disabled={isLoading} className="w-full">
+                  {isLoading ? "Resetting..." : "Reset Password"}
+                </Button>
+              </div>
+            </form>
+
+            <div className="mt-8 text-sm text-center">
+              <AuthLink href="/login">Back to Login</AuthLink>
+            </div>
+          </div>
+        </Container>
+      </main>
+
+      <Footer />
+    </div>
+  );
+}

@@ -8,7 +8,7 @@ export default function Button({ children, ...props }: ButtonProps) {
   return (
     <button
       {...props}
-      className={`bg-darkPurple text-white py-3 rounded-md font-medium w-full hover:bg-opacity-90 transition ${props.className || ""}`}
+      className={`bg-darkPurple text-white py-3 rounded-md font-medium w-full hover:bg-brandOrange transition-colors duration-200 ${props.className || ""}`}
     >
       {children}
     </button>

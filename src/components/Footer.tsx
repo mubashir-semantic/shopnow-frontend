@@ -13,9 +13,9 @@ export default function Footer() {
       <Container className="pt-16 pb-6">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10 mb-12">
           <div className="md:col-span-5">
-            <h2 className="text-3xl font-bold text-brandOrange mb-6">
-              Bildialog
-            </h2>
+            <div className="text-3xl text-brandOrange font-bold tracking-wide mb-2">
+              CarWise
+            </div>
             <p className="text-sm font-light text-gray-300 mb-8 max-w-sm leading-relaxed">
               Leverandør av maskiner og forbruksartikler til bedrifter som
               arbeider med Miljøsanering-og Asbestsanering.
@@ -98,7 +98,7 @@ export default function Footer() {
         <hr className="border-gray-600 mb-6" />
 
         <div className="flex flex-col md:flex-row justify-between items-center text-sm font-light text-gray-400">
-          <p>© 2022 Bildialog | Powered by Bildialog</p>
+          <p>© 2022 CarWise | Powered by CarWise</p>
           <div className="flex space-x-4 mt-4 md:mt-0">
             <a
               href="#"
